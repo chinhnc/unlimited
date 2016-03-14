@@ -27,3 +27,7 @@ To watch some training videos, visit http://www.youtube.com/user/c9ide
 
 - 20121318 Nguyen Cong Chinh
 - 20121653 Pham Van Hai
+<<<<<<< HEAD
+=======
+- 20121902 Tran Cong Khanh
+>>>>>>> 6c0efc36f9ce5406668d887987c88f438a47caaf
