@@ -26,3 +26,4 @@ To watch some training videos, visit http://www.youtube.com/user/c9ide
 ## チームメンバー
 
 - 20121318 Nguyen Cong Chinh
+- 20121651 Nguyen Xuan Hai
