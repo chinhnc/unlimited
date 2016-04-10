@@ -7,5 +7,6 @@ Rails.application.routes.draw do
   end
 
   devise_for :users
-  root to: "static_pages#home"
+  root to: "static_pages#start"
+  get 'home' => 'static_pages#home'
 end
