@@ -1,28 +1,36 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="container">
     <%= link_to "PHOTOWEBSITE", root_url, id: "logo" %>
-    <nav>
-      <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to "Home", root_url %></li>
-        <li><%= link_to "Upload", new_image_path %></li>
-        <% if user_signed_in? %>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            Account <b class="caret"></b>
-          </a>
-          <ul class="dropdown-menu">
-            <li><%= link_to "Profile", root_url %></li>
-            <li><%= link_to "Settings", root_url %></li>
-            <li class="divider"></li>
-            <li>
-              <%= link_to "Log out", destroy_user_session_path, method: :delete %>
-            </li>
-          </ul>
-        </li>
-        <%else%>
-        <li><%= link_to "Login", sign_in_path %></li>
-        <%end%>
-      </ul>
-    </nav>
-  </div>
+    <%= form_tag search_path, method: :get, class: 'navbar-form navbar-left' do %>
+    <div class='form-group'>
+    <%= text_field_tag :query, params[:query], id: "navbar-search-input", class: 'form-control', placeholder: 'Search...' %>
+   </div>
+   <%= button_tag(type: 'submit', id: 'navbar-search-btn', class: 'btn btn-default') do %>
+   <i class='fa fa-search fa-fw'></i> Search
+   <% end %>  
+   <% end %>
+   <nav>
+    <ul class="nav navbar-nav navbar-right">
+      <li><%= link_to "Home", root_url %></li>
+      <li><%= link_to "Upload", new_image_path %></li>
+      <% if user_signed_in? %>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          Account <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><%= link_to "Profile", root_url %></li>
+          <li><%= link_to "Settings", root_url %></li>
+          <li class="divider"></li>
+          <li>
+            <%= link_to "Log out", destroy_user_session_path, method: :delete %>
+          </li>
+        </ul>
+      </li>
+      <%else%>
+      <li><%= link_to "Login", sign_in_path %></li>
+      <%end%>
+    </ul>
+  </nav>
+</div>
 </header>

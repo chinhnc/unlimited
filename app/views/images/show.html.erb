@@ -15,6 +15,9 @@
   <%= @image.description %>
 </p>
 
+<%= render "download" %><br/>
+<% if user_signed_in? %>
+
 <%= render "likes/like_form", image: @image %>
 <strong id="likes"><%= @image.likes.count %></strong> likes
 
@@ -24,6 +27,9 @@
     <%= render 'shared/error_messages', object: f.object %>
     <%= f.text_area :content, :size => "40x2" %><br/>
     <button class="btn btn-primary" type="submit">Comment</button>
+<% end %>
+<% else %>
+<p>You can login to commment and like</p>
 <% end %>
 ======================================================
 <div class="comments">

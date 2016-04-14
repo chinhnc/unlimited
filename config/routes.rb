@@ -16,4 +16,6 @@ Rails.application.routes.draw do
   devise_for :users
   root to: "static_pages#start"
   get 'home' => 'static_pages#home'
+  post 'images/:id' => 'images#download'
+  get 'search' => 'search#images_search'
 end
