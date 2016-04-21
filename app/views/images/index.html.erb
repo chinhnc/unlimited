@@ -307,7 +307,8 @@
 <script src="assets/javascripts/util.js"></script>
 <script src="assets/javascripts/images.js"></script>
 
-<div id="main">
+<div class="container">
+  <div id="main">
   <% @images.each do |image| %>
   <article class="thumb">
     <a href="<%= image_path(image) %>" class="image"><%= image_tag image.file.size1.url%></a>
@@ -315,4 +316,6 @@
     <p><%= image.description %></p>
   </article>
   <% end %>
+</div>
+
 </div>
