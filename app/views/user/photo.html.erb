@@ -1,0 +1,36 @@
+<%= render 'user/layout_profile' %>
+
+<section class="container-fluid bh_main_content" style="margin-top:0">
+  <div class="photo-container">
+    <div class="row">
+      <h2 class="text-center">Photo</h2>
+      <div class="grid row">
+        <% @images.each do |image| %>
+        <div class="grid-item col-md-3 col-sm-4 col-xs-6">
+          <div class="wrap">
+            <div class="img">
+              <a href="<%= image_path(image) %>"><%= image_tag image.file.url%></a>
+            </div>
+            <div class="content">
+              <h5><%= image.title %></h5>
+              <p>
+                <%= "#{image.likes.count}" if image.likes.count > 0 %>
+                <span class="glyphicon glyphicon-thumbs-up"></span>
+                <a href="<%= image_path(image) %>">
+                  <%= "#{image.comments.count}" if image.comments.count > 0 %>
+                  <span class="glyphicon glyphicon-comment"></span>
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".photo").addClass("active");
+  });
+</script>

@@ -1,40 +1,109 @@
-<p id="notice"><%= notice %></p>
+<section class="main-container">
+  <div class="image_content row">
+    <div class="image_left col-md-8">
+      <article>
+        <div class="detail_image_header">
+          <h2 class="detail_image_title"><%= @image.title %></h2>
+        </div>
+        <ul class="detail_image_info">
+          <li class="detail_image_info_date"><span ><%= @image.updated_at %></span></li>
+          <li class="detail_image_info_count_like">
+            <span class="like">
+              <i class="glyphicon glyphicon-thumbs-up like"></i> 
+              <span class='count-like'><%= @image.likes.count %></span>
+            </span>
+          </li>
+        </ul>
+        <div class="photo_content">
+          <%= image_tag @image.file.url, class: "img-rounded image-view" %>
+          <p>
+            <label class="caption">Description: </label>
+            <p><%= @image.description %></p>
+          </p>
+        </div>
+      </article>
+    </div>
+    <div class="image_right col-md-4">
+      <ul>
+        <li>
+          <p><b>Upload by</b></p>
+          <p>
+            <a href="/user/<%= @image.user.id %>" class="user_name">
+              <p><%= @image.user.name ? @image.user.name : "No Name" %></p>
+              <%= image_tag("default_avatar.jpeg", class: "img-rounded avatar") %>
+            </a>
+          </p>
+        </li>
+        @if($image->album->user->id != Session::get('current_user'))
+        <li>
+          <p><b>Category</b></p>
+          <p>{{ $image->album->category->title}}</p>
+        </li>
+        @else
+        <li>
+          <p><b>Category</b></p>
+          <p>
+            <select class='form-control' name='category_id'>
+              @foreach($categories as $category)
+              <option value='{{$category->id}}'
+                @if($category->id == $image->album->category_id)
+                selected='true'
+                @endif
+                >{{$category->title}}</option>
+                @endforeach
+              </select>
+            </p>
+          </li>
+          @endif
+        </ul>
 
-<p>
-  <strong>Title:</strong>
-  <%= @image.title %>
-</p>
 
-<p>
-  <strong>Image:</strong>
-  <%= image_tag @image.file.profile_size.url %>
-</p>
+        @if(Session::has('current_user'))
+        <form action="{{url('comment')}}" id="comment-form" method="POST">
+          <input type="hidden" name="post_id" value="{{$post->post_id}}">
+          <input type="hidden" name="type" value="2">
+          <ul>
+            <li>
+              <p><b>Comment</b></p>
+              <textarea class="form-control comment-conent" name="commentContent" placeholder="Comment here..."></textarea>
+            </li>
+            <li>
+              <button class="btn btn-danger submit" name="submit" value=''>Submit</button>
+            </li>
+          </ul>
+        </form>
+        @else
+        <ul>
+          <li>
+            <p>(Please login to comment)</p>
+          </li>
+        </ul>  
+        @endif
+        <div class='clearfix'></div>
+        <div class="detailBox">
+          <div class="titleBox">
+            <label>Comment Box</label>
+            <span class='glyphicon glyphicon-chevron-up'></span>
+          </div>
+          <div class="actionBox">
+            <ul class="commentList">
+              @foreach ($post->comments as $comment)
+              <li>
+                <p>
 
-<p>
-  <strong>Description:</strong>
-  <%= @image.description %>
-</p>
+                  <b>{{$comment->user->name}}</b>
 
-<%= render "download" %><br/>
-<% if user_signed_in? %>
+                </p>
+                <div class="commentText ">
+                  <span class="comment-view form-control">{{$comment->content}}</span>
+                  <span class="date sub-text">on {{$comment->created_at}}</span>
+                </div>
+              </li>
+              @endforeach
+            </ul>
+          </div>
+        </div>
 
-<%= render "likes/like_form", image: @image %>
-<strong id="likes"><%= @image.likes.count %></strong> likes
-
-
-------------------------------------------------------------------------
-<%= form_for([@image, current_user.comments.build], html: { multipart: true }, remote: true) do |f| %>
-    <%= render 'shared/error_messages', object: f.object %>
-    <%= f.text_area :content, :size => "40x2" %><br/>
-    <button class="btn btn-primary" type="submit">Comment</button>
-<% end %>
-<% else %>
-<p>You can login to commment and like</p>
-<% end %>
-======================================================
-<div class="comments">
-<%= render @comments %>
-</div>
-<br/>
-<%= link_to 'Edit', edit_image_path(@image) %> |
-<%= link_to 'Back', images_path %>
+      </div>
+    </div>
+  </section>

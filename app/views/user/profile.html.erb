@@ -1,0 +1,60 @@
+<%= render 'user/layout_profile' %>
+
+<section class="container-fluid bh_main_content" style="margin-top:0">
+  <div class="profile-container">
+    <div class="row">
+      <h1 class="text-center">Profile</h1>
+      <div id="user_info" class="container td-profile">
+        <div class="row">
+          <div class="col-md-6 td-profile-col-left visible-md-block visible-lg-block">
+          <%= image_tag("proinf3.png", :alt => "") %>
+          </div>
+          <div class="col-md-6 td-profile-col-right">
+            <!-- Thong tin co ban -->
+            <h1>Information</h1>
+            <i class="flaticon-user7"></i>
+            <ul>
+              <li>
+                <div class="td-profile-infor has-feedback">
+                  <label class="td-form-label text-right">
+                    <strong>Name</strong>
+                  </label>
+                  <span><%= @user.name ? @user.name : "No Name" %></span>
+                </div>
+              </li>
+              <li>
+                <div class="td-profile-infor">
+                  <label class="td-form-label text-right">
+                    <strong>Email</strong>
+                  </label>
+                  <span><%= @user.email %></span>
+                </div>
+              </li>
+              <li>
+                <div class="td-profile-infor has-feedback">
+                  <label class="td-form-label text-right">
+                    <strong>Avatar</strong>
+                  </label>
+                  <%= image_tag("default_avatar.jpeg", :alt => "", class: "img-rounded avatar", style: "width: 20%") %>
+                  <input type="file" class='hidden avatar' name="avatar" value="">
+                  <div class="error"></div>
+                </div>
+              </li>
+
+            </ul>
+
+          </div>
+          <!-- het thong tin co ban -->
+      </form>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+</section>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".info").addClass("active");
+  });
+</script>

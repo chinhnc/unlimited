@@ -1,0 +1,23 @@
+<section class="bh_banner container-fluid" style="">
+  <div class="row">
+    <div class="bh_bgr text-center">
+      <div class="wrapper">
+        <div class="img">
+          <%= image_tag("default_avatar.jpeg", :alt => "avatar") %>
+        </div>
+        <h3><%= @user.name ? @user.name : "No Name"%></h3>
+      </div>
+      <ul class="bh_link-list">
+        <li class="photo">
+          <a href="/user/<%= @user.id %>/photo">Photos</a>
+        </li>
+        <li class="info">
+          <a href="/user/<%= @user.id %>">Info</a>
+        </li>
+        <li class="follow">
+         <a href="/user/<%= @user.id %>/follow">Follow</a>
+       </li> 
+     </ul>
+   </div>
+ </div>
+</section>
