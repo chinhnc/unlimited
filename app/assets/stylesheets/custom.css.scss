@@ -129,7 +129,7 @@ header .navbar-toggle .icon-bar{
 .upload {
   top: -18px;
 }
-.signup, .signin, .edit {
+.signup, .signin, .edit, .edit-image {
   text-align: center;
   width: 25%;
   margin: 0 auto;
@@ -137,7 +137,7 @@ header .navbar-toggle .icon-bar{
 .edit {
   color: #3097d1;
 }
-.signup form {
+.signup form, .edit-image form {
   margin-top: 25%;
 }
 .signin form {
@@ -298,10 +298,16 @@ section.bh_main_content{
   margin-bottom: 5%;
 }
 .td-profile-col-left{
-    border-right: 1px solid #d9e6f1;
-    text-align: center;
+  border-right: 1px solid #d9e6f1;
+  text-align: center;
   padding-top: 16px;
 }
+
+.td-profile-col-right{
+  border-left: 1px solid #d9e6f1;
+  padding-top: 16px;
+}
+
 .flaticon-crayon4:before{
   font-size: 15px !important;
 }
@@ -510,7 +516,7 @@ button{
   li {
     border: 1px solid #e8e8e8;
     border-radius: 5px;
-    margin: 5% 20%;
+    margin: 5% 12%;
     padding: 10px 10px;
     background-color: #fff;
     box-shadow: 0 2px 7px #bbb;
@@ -545,7 +551,7 @@ button{
   }
   #user {
     margin: 10px;
-    width: 275px;
+    width: 375px;
   }
   .user-name {
     margin: 0;
