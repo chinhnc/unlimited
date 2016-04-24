@@ -7,7 +7,7 @@
         </div>
         <ul class="detail_image_info">
           <li class="detail_image_info_date"><span ><%= @image.updated_at %></span></li>
-          <li class="detail_image_info_count_like">
+          <li class="detail_image_info_count_like like">
             <span class="like">
               <i class="glyphicon glyphicon-thumbs-up like"></i> 
               <span class='count-like'><%= @image.likes.count %></span>
@@ -34,51 +34,27 @@
             </a>
           </p>
         </li>
-        @if($image->album->user->id != Session::get('current_user'))
-        <li>
-          <p><b>Category</b></p>
-          <p>{{ $image->album->category->title}}</p>
+        <li style="margin-bottom: 8px;">
+          <%= render "likes/like_form", image: @image if user_signed_in? %>
         </li>
-        @else
         <li>
-          <p><b>Category</b></p>
-          <p>
-            <select class='form-control' name='category_id'>
-              @foreach($categories as $category)
-              <option value='{{$category->id}}'
-                @if($category->id == $image->album->category_id)
-                selected='true'
-                @endif
-                >{{$category->title}}</option>
-                @endforeach
-              </select>
-            </p>
-          </li>
-          @endif
-        </ul>
-
-
-        @if(Session::has('current_user'))
-        <form action="{{url('comment')}}" id="comment-form" method="POST">
-          <input type="hidden" name="post_id" value="{{$post->post_id}}">
-          <input type="hidden" name="type" value="2">
-          <ul>
-            <li>
-              <p><b>Comment</b></p>
-              <textarea class="form-control comment-conent" name="commentContent" placeholder="Comment here..."></textarea>
-            </li>
-            <li>
-              <button class="btn btn-danger submit" name="submit" value=''>Submit</button>
-            </li>
-          </ul>
-        </form>
-        @else
+          <%= render "download" %>
+        </li>
+      </ul>
+      <% if user_signed_in? %>
+        <p><b>Comment</b></p>
+        <%= form_for([@image, current_user.comments.build], html: { multipart: true }) do |f| %>
+        <%= render 'shared/error_messages', object: f.object %>
+        <%= f.text_area :content, placeholder: "Enter comment ...", class: "form-control comment-conent" %><br/>
+        <button class="btn btn-primary" type="submit">Comment</button>
+        <% end %>
+      <% else %>
         <ul>
           <li>
             <p>(Please login to comment)</p>
           </li>
         </ul>  
-        @endif
+      <% end %>
         <div class='clearfix'></div>
         <div class="detailBox">
           <div class="titleBox">
@@ -87,23 +63,20 @@
           </div>
           <div class="actionBox">
             <ul class="commentList">
-              @foreach ($post->comments as $comment)
+              <% @image.comments.each do |comment| %>
               <li>
                 <p>
-
-                  <b>{{$comment->user->name}}</b>
-
+                  <b><%= comment.user.name ? comment.user.name : "No Name" %></b>
                 </p>
                 <div class="commentText ">
-                  <span class="comment-view form-control">{{$comment->content}}</span>
-                  <span class="date sub-text">on {{$comment->created_at}}</span>
+                  <span class="comment-view form-control"><%= comment.content %></span>
+                  <span class="date sub-text">on <%= comment.created_at %></span>
                 </div>
               </li>
-              @endforeach
+              <% end %>
             </ul>
           </div>
         </div>
-
       </div>
     </div>
   </section>
