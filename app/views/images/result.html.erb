@@ -1,5 +1,7 @@
 <section class="main-container", style="margin-bottom: 15px;">
-  <h2>Searching Result</h2>
+  <h2 class="text-center">Searching result</h2>
+  <h4 class="text-center hide" id="image-search"><a>go to images</a></h4>
+  <h4 class="text-center" id="user-search"><a>go to users</a></h4>
   <div class="grid row">
     <% @images.each do |image| %>
     <div class="grid-item col-md-3 col-sm-4 col-xs-6">
@@ -22,4 +24,38 @@
     </div>
     <% end %>
   </div>
+  <div class="user-search hide">
+    <% if @users %>
+    <ol class="users-search-list text-left row">
+      <% @users.each do |user|%>
+      <li id="user" class="col-md-3">
+        <%= link_to image_tag(user.avatar.profile_size.url ? user.avatar.profile_size.url : "default_avatar.jpeg", class: "img-rounded user-avatar"), "/user/#{user.id}" %>
+        <h3 class="user-name">
+          <%= link_to user.name ? user.name : "No Name", "/user/#{user.id}" %>
+        </h3>
+        <h4><%= user.email %></h4>
+      </li>
+      <% end %>
+    </ol>
+    <% else %>
+    <h4>Not found</h4>
+    <% end %>
+  </div>
 </section>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#image-search").click(function(){
+      $("#user-search").removeClass("hide");
+      $("#image-search").addClass("hide");
+      $(".user-search").addClass("hide");
+      $(".grid").removeClass("hide");
+    });
+
+    $("#user-search").click(function(){
+      $("#user-search").addClass("hide");
+      $("#image-search").removeClass("hide");
+      $(".user-search").removeClass("hide");
+      $(".grid").addClass("hide");
+    });
+  });
+</script>

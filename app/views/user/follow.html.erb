@@ -1,11 +1,47 @@
 <%= render 'user/layout_profile' %>
-
+<% @user ||= current_user %>
 <section class="container-fluid bh_main_content" style="margin-top:0">
   <div class="follow-container">
     <div class="row">
-
       <h1 class="text-center">Follow</h1>
+      <div id="user_info" class="container td-profile">
+        <div class="row">
+          <div class="col-md-6 td-profile-col-left visible-md-block visible-lg-block">
+            <h2>Following(<%= @user.following.count %>)</h2>
+            <% if @user.following %>
+            <ol class="users-list text-left">
+              <% @user.following.each do |user|%>
+              <li id="user">
+                <%= link_to image_tag(user.avatar.profile_size.url ? user.avatar.profile_size.url : "default_avatar.jpeg", class: "img-rounded user-avatar"), "/user/#{user.id}" %>
+                <h3 class="user-name">
+                  <%= link_to user.name ? user.name : "No Name", "/user/#{user.id}" %>
+                </h3>
+                <h4><%= user.email %></h4>
+              </li>
+              <% end %>
+            </ol>
+            <% end %>
 
+          </div>
+          <div class="col-md-6 td-profile-col-left visible-md-block visible-lg-block">
+            <h2>Followers(<%= @user.followers.count %>)</h2>
+            <% if @user.followers %>
+            <ol class="users-list text-left">
+              <% @user.followers.each do |user|%>
+              <li id="user">
+                <%= link_to image_tag(user.avatar.profile_size.url ? user.avatar.profile_size.url : "default_avatar.jpeg", class: "img-rounded user-avatar"), "/user/#{user.id}" %>
+                <h3 class="user-name">
+                  <%= link_to user.name ? user.name : "No Name", "/user/#{user.id}" %>
+                </h3>
+                <h4><%= user.email %></h4>
+              </li>
+              <% end %>
+            </ol>
+            <% end %>
+
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>

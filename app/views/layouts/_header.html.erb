@@ -1,36 +1,55 @@
-<header class="navbar navbar-fixed-top navbar-inverse">
-  <div class="container">
-    <%= link_to "PHOTOWEBSITE", root_url, id: "logo" %>
-    <%= form_tag search_path, method: :get, class: 'navbar-form navbar-left' do %>
-    <div class='form-group'>
-    <%= text_field_tag :query, params[:query], id: "navbar-search-input", class: 'form-control', placeholder: 'Search...' %>
-   </div>
-   <%= button_tag(type: 'submit', id: 'navbar-search-btn', class: 'btn btn-default an') do %>
-   <i class='fa fa-search fa-fw'></i> Search
-   <% end %>  
-   <% end %>
-   <nav>
-    <ul class="nav navbar-nav navbar-right">
-      <li><%= link_to "Home", home_path %></li>
-      <li><%= link_to "Upload", new_image_path %></li>
-      <% if user_signed_in? %>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          Account <b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu">
-          <li><%= link_to "Profile", root_url %></li>
-          <li><%= link_to "Settings", root_url %></li>
-          <li class="divider"></li>
-          <li>
-            <%= link_to "Log out", destroy_user_session_path, method: :delete %>
-          </li>
-        </ul>
-      </li>
-      <%else%>
-      <li><%= link_to "Login", sign_in_path %></li>
-      <%end%>
-    </ul>
+<header>
+  <nav class="navbar navbar-fixed-top">
+    <div class="header-container">
+      <div class="row">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span> 
+          </button>
+          <%= link_to image_tag("logo.png", :alt => ""), root_url, class: "navbar-brand" %>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav">
+            <li class="active"><%= link_to "Home", root_url %></li>
+            <% if user_signed_in? %>
+            <li><%= link_to "My Photo", "/user/#{current_user.id}/photo" %></li>
+            <li><%= link_to "Follow", "/user/#{current_user.id}/follow" %></li>
+            <li><%= link_to "Notification", root_url %></li>
+            <% else %>
+            <li class="active"><%= link_to "Sign In", sign_in_path %></li>
+            <li><%= link_to "Sign Up", sign_up_path %></li>
+            <% end %>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="bh_upload visible-sm-block visible-md-block visible-lg-block">
+              <a href="/upload" class="upload"><span class="glyphicon glyphicon-cloud-upload"></span></a>
+            </li>
+            <li class="bh_search visible-sm-block visible-md-block visible-lg-block">
+              <%= form_tag search_path, method: :get do %>
+                <%= text_field_tag :query, params[:query], id: "navbar-search-input", class: 'form-control', placeholder: 'Search photo, user, ...' %>
+              <%= button_tag(type: 'submit', id: 'navbar-search-btn', class: 'hide')%> 
+              <% end %>
+            </li>
+            <% if user_signed_in? %>
+            <li class="bh_notifi visible-sm-block visible-md-block visible-lg-block">
+              <span class="glyphicon glyphicon-globe"></span>
+            </li>
+            <li class="dropdown bh_logo_user visible-sm-block visible-md-block visible-lg-block">
+              <a href="#" class="dropdown-toggle avatar-drop" data-toggle="dropdown">
+                <%= image_tag(current_user.avatar.profile_size.url ? current_user.avatar.profile_size.url : "default_avatar.jpeg", :alt => "", class: "header-avatar") %>
+              </a>
+              <ul class="dropdown-menu bg-drop">
+                <li><%= link_to "Profile", "/user/#{current_user.id}" %></li>
+                <li><%= link_to "Edit", edit_user_registration_path %></li>
+                <li><%= link_to "Log out", destroy_user_session_path, method: :delete %></li>
+              </ul>
+            </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
   </nav>
-</div>
 </header>

@@ -3,9 +3,10 @@
     <div class="bh_bgr text-center">
       <div class="wrapper">
         <div class="img">
-          <%= image_tag("default_avatar.jpeg", :alt => "avatar") %>
+          <%= image_tag(@user.avatar.profile_size.url ? @user.avatar.profile_size.url : "default_avatar.jpeg", :alt => "avatar") %>
         </div>
         <h3><%= @user.name ? @user.name : "No Name"%></h3>
+        <%= render "follow_form" if user_signed_in? %>
       </div>
       <ul class="bh_link-list">
         <li class="photo">

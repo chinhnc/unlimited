@@ -7,7 +7,6 @@ $(document).ready(function() {
 	});
 
 	$('.grid').masonry({
-		itemSelector: '.grid-item',
-		columnWidth: 332
+		itemSelector: '.grid-item'
 	});
 });

@@ -20,6 +20,9 @@
             <label class="caption">Description: </label>
             <p><%= @image.description %></p>
           </p>
+          <% if user_signed_in? && (current_user == @image.user)%>
+          <%= link_to 'Edit', edit_image_path(@image), class: "btn btn-danger" %>
+          <% end %>
         </div>
       </article>
     </div>
@@ -30,7 +33,7 @@
           <p>
             <a href="/user/<%= @image.user.id %>" class="user_name">
               <p><%= @image.user.name ? @image.user.name : "No Name" %></p>
-              <%= image_tag("default_avatar.jpeg", class: "img-rounded avatar") %>
+              <%= image_tag(@image.user.avatar.profile_size.url ? @image.user.avatar.profile_size.url : "default_avatar.jpeg", class: "img-rounded avatar") %>
             </a>
           </p>
         </li>
@@ -42,41 +45,48 @@
         </li>
       </ul>
       <% if user_signed_in? %>
-        <p><b>Comment</b></p>
-        <%= form_for([@image, current_user.comments.build], html: { multipart: true }) do |f| %>
-        <%= render 'shared/error_messages', object: f.object %>
-        <%= f.text_area :content, placeholder: "Enter comment ...", class: "form-control comment-conent" %><br/>
-        <button class="btn btn-primary" type="submit">Comment</button>
-        <% end %>
-      <% else %>
-        <ul>
-          <li>
-            <p>(Please login to comment)</p>
-          </li>
-        </ul>  
+      <p><b>Comment</b></p>
+      <%= form_for([@image, current_user.comments.build], html: { multipart: true }, remote: true) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+      <%= f.text_area :content, placeholder: "Enter comment ...", class: "form-control comment-content" %><br/>
+      <button class="btn btn-primary btn-cus" type="submit">Comment</button>
       <% end %>
-        <div class='clearfix'></div>
-        <div class="detailBox">
-          <div class="titleBox">
-            <label>Comment Box</label>
-            <span class='glyphicon glyphicon-chevron-up'></span>
-          </div>
-          <div class="actionBox">
-            <ul class="commentList">
-              <% @image.comments.each do |comment| %>
-              <li>
-                <p>
-                  <b><%= comment.user.name ? comment.user.name : "No Name" %></b>
-                </p>
-                <div class="commentText ">
-                  <span class="comment-view form-control"><%= comment.content %></span>
-                  <span class="date sub-text">on <%= comment.created_at %></span>
-                </div>
-              </li>
-              <% end %>
-            </ul>
-          </div>
+      <% else %>
+      <ul>
+        <li>
+          <p>(Please login to comment)</p>
+        </li>
+      </ul>  
+      <% end %>
+      <div class='clearfix'></div>
+      <div class="detailBox">
+        <div class="titleBox">
+          <label>Comment Box</label>
+          <span class='glyphicon glyphicon-chevron-up'></span>
+        </div>
+        <div class="actionBox">
+          <ul class="commentList">
+            <% @image.comments.each do |comment| %>
+            <%= render "comments/comment", comment: comment %>
+            <% end %>
+          </ul>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+<script type="text/javascript">
+  $(document).ready(function(){
+    var t = 0;
+    $(".titleBox").click(function(){
+      if (t%2 == 0) {
+        $(".actionBox").addClass("hide");
+        $(".titleBox span").removeClass("glyphicon-chevron-up").addClass("glyphicon-chevron-down");
+      }else{
+        $(".actionBox").removeClass("hide");
+        $(".titleBox span").addClass("glyphicon-chevron-up").removeClass("glyphicon-chevron-down");
+      }
+      t = t + 1;
+    });
+  });
+</script>

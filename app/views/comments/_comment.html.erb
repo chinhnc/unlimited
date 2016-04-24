@@ -1,13 +1,11 @@
-<div id="comment-<%= comment.id %>" >
-  <span style="width: 100%; background:#dff0d8">
-    <%= comment.content %>
-    <br>
-  </span>
-  <span class="timestamp">
-    Commented by <%= comment.user.name %>
-    <%= time_ago_in_words(comment.created_at) %> ago.
+<li class="comment-<%= comment.id %>">
+  <%= link_to image_tag(comment.user.avatar.profile_size.url ? comment.user.avatar.profile_size.url : "default_avatar.jpeg", class: "img-rounded cmt-user-avatar"), "/user/#{comment.user.id}" %>
+  <h5 class="user-name">
+    <%= link_to comment.user.name ? comment.user.name : "No Name", "/user/#{comment.user.id}" %>
     <% if current_user?(comment.user) || current_user?(comment.image.user) %>
-        <%= link_to "delete", comment, method: :delete, remote: true, data: { confirm: "You sure?" } %>
+    <%= link_to "delete", comment, method: :delete, remote: true, data: { confirm: "You sure?" }, class: "del-cmt" %>
     <% end %>
-  </span>
-</div>
+  </h5>
+  <p class="comment-content"><%= comment.content %></p>
+  <p class="comment-time text-right">on <%= comment.created_at %></p>
+</li>

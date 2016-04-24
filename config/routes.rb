@@ -25,4 +25,10 @@ Rails.application.routes.draw do
   get 'home' => 'static_pages#home'
   post 'images/:id' => 'images#download'
   get 'search' => 'search#images_search'
+  resources :relationships, only: [:create, :destroy]
+  resources :user do
+    member do
+      get :following, :followers
+    end
+  end
 end
