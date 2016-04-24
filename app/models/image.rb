@@ -1,8 +1,8 @@
 class Image < ActiveRecord::Base
   mount_uploader :file, ImageUploader
   belongs_to :user
-  has_many :comments
-  has_many :likes
+  has_many :comments, dependent: :destroy
+  has_many :likes, dependent: :destroy
   validates_presence_of :title, :file, :description
 
   def self.search(term)
