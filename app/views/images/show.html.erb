@@ -22,6 +22,7 @@
           </p>
           <% if user_signed_in? && (current_user == @image.user)%>
           <%= link_to 'Edit', edit_image_path(@image), class: "btn btn-danger" %>
+          <%= link_to 'Delete', @image, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
           <% end %>
         </div>
       </article>

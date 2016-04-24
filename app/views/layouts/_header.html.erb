@@ -16,7 +16,6 @@
             <% if user_signed_in? %>
             <li><%= link_to "My Photo", "/user/#{current_user.id}/photo" %></li>
             <li><%= link_to "Follow", "/user/#{current_user.id}/follow" %></li>
-            <li><%= link_to "Notification", root_url %></li>
             <% else %>
             <li class="active"><%= link_to "Sign In", sign_in_path %></li>
             <li><%= link_to "Sign Up", sign_up_path %></li>
@@ -33,9 +32,6 @@
               <% end %>
             </li>
             <% if user_signed_in? %>
-            <li class="bh_notifi visible-sm-block visible-md-block visible-lg-block">
-              <span class="glyphicon glyphicon-globe"></span>
-            </li>
             <li class="dropdown bh_logo_user visible-sm-block visible-md-block visible-lg-block">
               <a href="#" class="dropdown-toggle avatar-drop" data-toggle="dropdown">
                 <%= image_tag(current_user.avatar.profile_size.url ? current_user.avatar.profile_size.url : "default_avatar.jpeg", :alt => "", class: "header-avatar") %>
