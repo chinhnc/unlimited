@@ -1,2 +1,2 @@
-$(".comments").prepend("<%= escape_javascript(render('comments/comment', comment: @comment)) %>");
-$("#comment_content").val("");
+$(".commentList").prepend("<%= escape_javascript(render('comments/comment', comment: @comment)) %>");
+$(".comment-content").val("");

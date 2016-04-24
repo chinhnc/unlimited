@@ -1,34 +1,92 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Title:</strong>
-  <%= @image.title %>
-</p>
-
-<p>
-  <strong>Image:</strong>
-  <%= image_tag @image.file.profile_size.url %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @image.description %>
-</p>
-
-<%= render "likes/like_form", image: @image %>
-<strong id="likes"><%= @image.likes.count %></strong> likes
-
-
-------------------------------------------------------------------------
-<%= form_for([@image, current_user.comments.build], html: { multipart: true }, remote: true) do |f| %>
-    <%= render 'shared/error_messages', object: f.object %>
-    <%= f.text_area :content, :size => "40x2" %><br/>
-    <button class="btn btn-primary" type="submit">Comment</button>
-<% end %>
-======================================================
-<div class="comments">
-<%= render @comments %>
-</div>
-<br/>
-<%= link_to 'Edit', edit_image_path(@image) %> |
-<%= link_to 'Back', images_path %>
+<section class="main-container">
+  <div class="image_content row">
+    <div class="image_left col-md-8">
+      <article>
+        <div class="detail_image_header">
+          <h2 class="detail_image_title"><%= @image.title %></h2>
+        </div>
+        <ul class="detail_image_info">
+          <li class="detail_image_info_date"><span ><%= @image.updated_at %></span></li>
+          <li class="detail_image_info_count_like like">
+            <span class="like">
+              <i class="glyphicon glyphicon-thumbs-up like"></i> 
+              <span class='count-like'><%= @image.likes.count %></span>
+            </span>
+          </li>
+        </ul>
+        <div class="photo_content">
+          <%= image_tag @image.file.url, class: "img-rounded image-view" %>
+          <p>
+            <label class="caption">Description: </label>
+            <p><%= @image.description %></p>
+          </p>
+          <% if user_signed_in? && (current_user == @image.user)%>
+          <%= link_to 'Edit', edit_image_path(@image), class: "btn btn-danger" %>
+          <% end %>
+        </div>
+      </article>
+    </div>
+    <div class="image_right col-md-4">
+      <ul>
+        <li>
+          <p><b>Upload by</b></p>
+          <p>
+            <a href="/user/<%= @image.user.id %>" class="user_name">
+              <p><%= @image.user.name ? @image.user.name : "No Name" %></p>
+              <%= image_tag(@image.user.avatar.profile_size.url ? @image.user.avatar.profile_size.url : "default_avatar.jpeg", class: "img-rounded avatar") %>
+            </a>
+          </p>
+        </li>
+        <li style="margin-bottom: 8px;">
+          <%= render "likes/like_form", image: @image if user_signed_in? %>
+        </li>
+        <li>
+          <%= render "download" %>
+        </li>
+      </ul>
+      <% if user_signed_in? %>
+      <p><b>Comment</b></p>
+      <%= form_for([@image, current_user.comments.build], html: { multipart: true }, remote: true) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+      <%= f.text_area :content, placeholder: "Enter comment ...", class: "form-control comment-content" %><br/>
+      <button class="btn btn-primary btn-cus" type="submit">Comment</button>
+      <% end %>
+      <% else %>
+      <ul>
+        <li>
+          <p>(Please login to comment)</p>
+        </li>
+      </ul>  
+      <% end %>
+      <div class='clearfix'></div>
+      <div class="detailBox">
+        <div class="titleBox">
+          <label>Comment Box</label>
+          <span class='glyphicon glyphicon-chevron-up'></span>
+        </div>
+        <div class="actionBox">
+          <ul class="commentList">
+            <% @image.comments.each do |comment| %>
+            <%= render "comments/comment", comment: comment %>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script type="text/javascript">
+  $(document).ready(function(){
+    var t = 0;
+    $(".titleBox").click(function(){
+      if (t%2 == 0) {
+        $(".actionBox").addClass("hide");
+        $(".titleBox span").removeClass("glyphicon-chevron-up").addClass("glyphicon-chevron-down");
+      }else{
+        $(".actionBox").removeClass("hide");
+        $(".titleBox span").addClass("glyphicon-chevron-up").removeClass("glyphicon-chevron-down");
+      }
+      t = t + 1;
+    });
+  });
+</script>

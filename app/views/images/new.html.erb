@@ -1,5 +1,15 @@
-<h1>New Image</h1>
+<div class="main-container">
+  <div class="signup">
+    <h1>Upload</h1>
 
-<%= render 'form' %>
+    <%= render 'form' %>
+    <%= link_to 'Back', images_path %>
 
-<%= link_to 'Back', images_path %>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("body").attr("style", "background-image: url(/assets/images/upload.jpg)");
+  });
+</script>

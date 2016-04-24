@@ -1,11 +1,13 @@
 class ImagesController < ApplicationController
   before_action :set_image, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: [:new, :edit, :destroy, :update, :create]
 
   # GET /images
   # GET /images.json
   def index
-    @images = Image.all
+    # @images = Image.all
+    redirect_to root_url
+
   end
 
   # GET /images/1
@@ -63,6 +65,11 @@ class ImagesController < ApplicationController
     end
   end
 
+  def download
+    image = Image.find(params[:id])
+    send_file Rails.root.to_s + "/public" + image.file.url
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_image
@@ -73,4 +80,4 @@ class ImagesController < ApplicationController
     def image_params
       params.require(:image).permit(:title, :file, :description)
     end
-end
+  end

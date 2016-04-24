@@ -1,0 +1,4 @@
+  <%= form_for(:image, controller: 'images#download') do |f| %>
+  <div><%= hidden_field_tag :id, @image.id %></div>
+  <%= f.submit "Download", class: "btn btn-primary" %>
+  <% end %>

@@ -1,2 +1,2 @@
 $("#like_form").html("<%= escape_javascript(render('likes/unlike', image: @image)) %>")
-$("#likes").html("<%= @image.likes.count %>")
+$(".count-like").html("<%= @image.likes.count %>")
