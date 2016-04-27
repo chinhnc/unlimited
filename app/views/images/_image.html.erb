@@ -1,0 +1,18 @@
+<div class="grid-item col-md-3 col-sm-4 col-xs-6">
+  <div class="wrap">
+    <div class="img">
+      <a href="<%= image_path(image) %>"><%= image_tag image.file.url%></a>
+    </div>
+    <div class="content">
+      <h5><%= image.title %></h5>
+      <p>
+        <%= "#{image.likes.count}" if image.likes.count > 0 %>
+        <span class="glyphicon glyphicon-thumbs-up"></span>
+        <a href="<%= image_path(image) %>">
+          <%= "#{image.comments.count}" if image.comments.count > 0 %>
+          <span class="glyphicon glyphicon-comment"></span>
+        </a>
+      </p>
+    </div>
+  </div>
+</div>

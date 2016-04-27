@@ -25,14 +25,14 @@
             <li class="bh_upload visible-sm-block visible-md-block visible-lg-block">
               <a href="/upload" class="upload"><span class="glyphicon glyphicon-cloud-upload"></span></a>
             </li>
-            <li class="bh_search visible-sm-block visible-md-block visible-lg-block">
+            <li class="bh_search">
               <%= form_tag search_path, method: :get do %>
                 <%= text_field_tag :query, params[:query], id: "navbar-search-input", class: 'form-control', placeholder: 'Search photo, user, ...' %>
               <%= button_tag(type: 'submit', id: 'navbar-search-btn', class: 'hide')%> 
               <% end %>
             </li>
             <% if user_signed_in? %>
-            <li class="dropdown bh_logo_user visible-sm-block visible-md-block visible-lg-block">
+            <li class="dropdown bh_logo_user">
               <a href="#" class="dropdown-toggle avatar-drop" data-toggle="dropdown">
                 <%= image_tag(current_user.avatar.profile_size.url ? current_user.avatar.profile_size.url : "default_avatar.jpeg", :alt => "", class: "header-avatar") %>
               </a>
