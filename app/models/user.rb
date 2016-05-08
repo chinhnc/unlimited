@@ -15,6 +15,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
   :recoverable, :rememberable, :trackable, :validatable
 
+  validates :name, uniqueness: true
+
   def liked?(image)
     image.likes.where(:user_id => id).blank?
   end

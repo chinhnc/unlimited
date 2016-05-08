@@ -23,6 +23,8 @@ Rails.application.routes.draw do
   devise_for :users
   root to: "static_pages#home"
   get 'home' => 'static_pages#home'
+  get 'hot' => 'static_pages#hot'
+  get 'recent_images' => 'static_pages#recent_images'
   post 'images/:id' => 'images#download'
   get 'search' => 'search#images_search'
   resources :relationships, only: [:create, :destroy]
